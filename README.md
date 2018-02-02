@@ -11,6 +11,13 @@
 ### `Chat project`
 This is a example project that shows how to use the framework. This is meant as a demo.
 
+The full project can be found [here](https://github.com/anzerr/peer_chat)
+```shell
+    git clone --recursive https://github.com/anzerr/peer_chat
+```
+You can run the test that will create a cluster of 5 servers on ports [500, 510, 520, 530, 540]
+
+
 #### `Create project`
 Use the one line command to create a base app
 ```shell
