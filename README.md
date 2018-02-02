@@ -32,7 +32,7 @@ node main.js --skeleton module --name client --module client
 ```
 
 #### `Update config`
-Add the submodule that need to be fetched for use in the project
+Add the submodule that need to be fetched for use in the project "app/config/module.js"
 ```javascript
 {
 	name: 'generic',
@@ -56,14 +56,14 @@ Add the submodule that need to be fetched for use in the project
 }
 ```
 
-Change the modules that need to be loaded
+Change the modules that need to be loaded "app/config/module.js"
 ```javascript
 var load = {
     worker: ['generic', 'libary', 'react', 'client', 'node']
 };
 ```
 
-Add the node module config
+Add the node module config "app/config/node.js"
 ```javascript
 "use strict";
 
@@ -75,7 +75,7 @@ module.exports = function(config) {
     });
 };
 ```
-Add the command line for peer
+Add the command line for peer "main.js"
 ```javascript
 var node = {};
 
@@ -91,7 +91,7 @@ c.if('peer', function() {
 config.node = node;
 ```
 
-Add to the node sub config into config.js
+Add to the node sub config into config.js "app/config.js"
 ```javascript
 var loadConfig  = {
 	server: config.path.app + '/config/server.js',
@@ -100,14 +100,14 @@ var loadConfig  = {
 };
 ```
 
-Change ports used in server.js
+Change ports used in "app/config/server.js"
 ```javascript
 ws: {
     port: config.port + 1
 }
 ```
 
-We want the ports to be
+We want the ports to be (Note)
 ```shell
     port + 0 = http
     port + 1 = websocket
@@ -116,12 +116,12 @@ We want the ports to be
 
 #### `Create websocket server`
 
-Init the websocket server
+Init the websocket server "app/bootstrap/worker.js"
 ```javascript
 _s.webSocket = s.webSocket('native', {port: $.config.get('server.ws.port')});
 ```
 
-Send messages into module route
+Send messages into module route "app/bootstrap/worker.js"
 ```javascript
 _s.webSocket.on('message', function(data) {
     m.query().api('websocket').route(data.url()).run({
@@ -134,13 +134,13 @@ _s.webSocket.on('message', function(data) {
 
 #### `Add Client`
 
-Change title in controller/client.js
+Change title in "module/client/controller/client.js"
 ```javascript
 header: ['<title>Chat</title>'],
 main: '/client/main.js'
 ```
 
-Add route to public/client/main.js
+Add route to "module/client/public/client/main.js"
 ```javascript
 $.route.add({
     path: '/',
@@ -151,11 +151,11 @@ $.route.add({
 });
 ```
 
-Add the client file found in [ressource/chat.js](ressource/chat.js) into public/client/module/
+Add the client file found in [ressource/chat.js](ressource/chat.js) into "module/client/public/client/module/"
 
 #### `Create "node" module`
 
-Create the websocket routes config/websocket.js
+Create the websocket routes "module/node/config/websocket.js"
 ```javascript
 {
 	api: ['websocket'],
@@ -183,14 +183,14 @@ Create the websocket routes config/websocket.js
 }
 ```
 
-Add websocket config
+Add websocket config "module/node/config.js"
 ```javascript
 route: [
 	'config/webSocket.js'
 ]
 ```
 
-Import needed modules in config.js
+Import needed modules in "module/node/config.js"
 ```javascript
 {
 	module: 'generic',
@@ -209,7 +209,7 @@ Import needed modules in config.js
 }
 ```
 
-Create entity to handle websockets in "entity/handle.js"
+Create entity to handle websockets in "module/node/entity/handle.js"
 ```javascript
 "use strict";
 
@@ -234,7 +234,7 @@ module.exports = function($) {
 };
 ```
 
-Create entity to manage the link between gossip network and websocket handler "entity/node.js"
+Create entity to manage the link between gossip network and websocket handler "module/node/entity/node.js"
 ```javascript
 "use strict";
 
@@ -285,7 +285,7 @@ module.exports = function($) {
 };
 ```
 
-Create controller for the routes
+Create controller for the routes "module/node/controller/client.js"
 ```javascript
 "use strict";
 
