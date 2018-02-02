@@ -27,8 +27,8 @@ Use the one line command to create a base app
 #### `Create modules`
 We need to create the two modules used in the project
 ```shell
-    node main.js --skeleton module --name node --module plain
-    node main.js --skeleton module --name client --module client
+node main.js --skeleton module --name node --module plain
+node main.js --skeleton module --name client --module client
 ```
 
 #### `Update config`
@@ -74,6 +74,21 @@ Add the node module config
             port: config.port + 2
         });
     };
+```
+Add the command line for peer
+```javascript
+    var node = {};
+
+    c.if('peer', function() {
+        console.log(c.get('peer'));
+        try {
+            node.peer = JSON.parse(c.get('peer')) || [];
+        } catch(e) {
+            node.peer = [];
+        }
+    });
+
+    config.node = node;
 ```
 
 Add to the node sub config into config.js
@@ -136,7 +151,7 @@ Add route to public/client/main.js
     });
 ```
 
-Add the client file found in ressource/chat.js into public/client/module/
+Add the client file found in [ressource/chat.js](ressource/chat.js) into public/client/module/
 
 #### `Create "node" module`
 
@@ -194,7 +209,7 @@ Import needed modules in config.js
     }
 ```
 
-Create entity to handle websockets
+Create entity to handle websockets in "entity/handle.js"
 ```javascript
     "use strict";
 
@@ -219,7 +234,7 @@ Create entity to handle websockets
     };
 ```
 
-Create entity to manage the link between gossip network and websocket handler
+Create entity to manage the link between gossip network and websocket handler "entity/node.js"
 ```javascript
     "use strict";
 
@@ -312,4 +327,10 @@ Create controller for the routes
     		return ({'static private': obj});
     	});
     };
+```
+
+Run the project commands
+```shell
+    node main.js --port 550
+    node main.js --port 560 --peer "[\"127.0.0.1:552\"]"
 ```
